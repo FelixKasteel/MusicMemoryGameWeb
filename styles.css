@@ -1,0 +1,416 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container for player names and scores */
+.player-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px; /* Adjust padding for balance */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80px;
+    margin-bottom: 20px; /* Space between the player names */
+    background-color: white;
+    text-align: center;
+    /*transition: all 0.15s ease; */
+    border: 4px solid white;
+}
+
+.score-container.current {
+    border: 4px solid black; /* Thicker border for current player */
+    background-color: rgba(0, 0, 0, 0.1); /* Light background to highlight */
+}
+
+.score-container.blue {
+    background-color: rgb(75, 105, 251);
+}
+
+.score-container.red {
+    background-color: rgb(252, 87, 87);
+}
+
+.score-container.green {
+    background-color: rgb(47, 193, 60);
+}
+
+.score-container.pink {
+    background-color: rgb(207, 57, 155);
+}
+
+.score-container.orange {
+    background-color: rgb(255, 164, 35);
+}
+
+.score-container.cyan {
+    background-color: rgb(76, 221, 209);
+}
+
+.score-container.rosa {
+    background-color: rgb(255, 192, 203);
+}
+
+.score-container h2 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.score-value {
+    font-size: 32px; /* Bigger score size */
+    font-weight: bold;
+    margin: 5px 0;
+    color: white;
+}
+
+/* Main game content section */
+/*.main-content {
+    flex: 1;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: 100%; 
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 10px;
+    width: 100%;
+    max-width: 1000px; 
+    height: 100%; 
+    margin: 0 auto;
+    overflow: auto; 
+}*/
+
+.main-content {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.grid {
+    display: grid;
+    gap: 10px;
+    margin: 0 auto;
+    justify-content: center;
+    align-content: center;
+    overflow: auto;
+}
+
+.card {
+    width: 90px;
+    height: 90px;
+    background-color: rgb(255, 208, 0);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border-radius: 8px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease, background-color 0.3s ease;
+}
+
+.card:active {
+    background-color: rgb(255, 184, 0);
+}
+
+.card:active {
+    background-color: rgb(255, 184, 0);
+}
+
+/* Flip effect */
+.card.flipped {
+    transform: rotateY(180deg);
+    background-color: rgb(255, 231, 126); /* Light yellow background when flipped */
+}
+
+.card.light-blue {
+    background-color: rgb(173, 216, 230); /* Light blue color */
+}
+
+.card-content.light-blue {
+    background-color: rgb(173, 216, 230); /* Light blue on the front side */
+}
+
+.card-back.light-blue {
+    background-color: rgb(173, 216, 230); /* Light blue on the back side */
+}
+
+.card-content, .card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    border-radius: 8px;
+}
+
+.card-content {
+    color: black;
+    font-size: 30px;
+    background-color: rgb(255, 208, 0);
+}
+
+.card-back {
+    color: black;
+    font-size: 30px;
+    background-color: rgb(255, 231, 126);
+    visibility: visible; /* Always visible */
+    transform: rotateY(180deg); /* Make sure it's not affected by flipping */
+}
+
+.card.flipped .card-content {
+    visibility: hidden; /* Hide front content when flipped */
+}
+
+.card.flipped .card-back {
+    visibility: visible; /* Show back content when flipped */
+}
+
+/* Add/remove player buttons (closer together) */
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 80px;
+    gap: 5px;
+}
+
+.button {
+    width: 33px;
+    height: 33px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ffc34b;
+    color: white;
+    border: none;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background-color: #f9a94e;
+}
+
+.button:active {
+    background-color: #dc9821;
+}
+
+/* Color and name input modal section */
+.player-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 20px;
+    border-radius: 25px;
+    background-color: #fdcc68;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 120px; /* Set a max-width for the modal */
+    width: 100px; /* Modal width adjusted */
+    text-align: center;
+    margin-left: 10px; /* Add margin for spacing from the left */
+    margin-right: 10px; /* Add margin for spacing from the right */
+}
+
+.player-modal select, .player-modal input {
+    padding: 10px;
+    border: 1px solid #f9b52e;
+    border-radius: 5px;
+    width: 100%; /* Make inputs span the full width inside the modal */
+    max-width: 280px; /* Limit the width to be inside the modal */
+}
+
+/* Modal save button */
+.player-modal button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.player-modal button:hover {
+    background-color: #0056b3;
+}
+
+.player-modal button:active {        
+    background-color: #004085;
+}
+
+
+/* Restart button (only icon) */
+.restart-btn {
+    margin-top: 10px;
+    font-size: 28px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.restart-btn:hover {
+    color: #0056b3;
+}
+
+.restart-btn:active {
+    color: #004085;
+}
+
+.click-counter {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    background: transparent;
+    padding: 3px;
+}
+
+.show-clicks .click-counter {
+    display: block;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#toggleClickCountBtn {
+    background: #007bff;
+    color: white;
+}
+
+#toggleClickCountBtn:hover {
+    background: #0056b3;
+}
+
+.cards-OptionView {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+width: 50%;
+height: 60%;
+flex-direction: column; 
+justify-content: flex-start;
+transform: translate(-50%, -50%);
+background: white;
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+text-align: center;
+z-index: 1000;
+}
+
+
+.littleGrid {
+display: grid;
+gap: 3px;
+margin: 0 auto;
+justify-content: center;
+align-content: center;
+overflow: auto;
+max-width: 80vw; /* Ensures grid doesn't overflow too much */
+}
+
+.littleCard {
+width: 20px; /* Adjust card size */
+height: 20px; /* Adjust card size */
+background-color: rgb(255, 208, 0);
+cursor: default; /* No pointer/clickable behavior */
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 3px;
+position: relative;
+transition: none; /* No transitions or hover effects */
+opacity: 0.8; /* Slightly transparent to emphasize preview nature */
+}
+
+input[type="range"] {
+width: 100%;
+margin: 10px 0;
+}
+
+#pairsCount {
+font-weight: bold;
+font-size: 20px;
+}
+
+.player-OptionView {
+display: none;
+background: white;
+padding: 30px;
+border-radius: 15px;
+box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+max-width: 700px;
+width: 100%;
+}
+
+.color-options {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+justify-content: center;
+margin-bottom: 25px;
+}
+
+.color-circle {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+cursor: pointer;
+border: 3px solid transparent;
+transition: transform 0.2s ease, border-color 0.3s ease;
+}
+
+.color-circle:hover {
+transform: scale(1.15);
+border-color: #555;
+}
+
+.color-circle.selected {
+border-color: black;
+box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+}
